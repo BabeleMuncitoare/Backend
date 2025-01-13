@@ -29,15 +29,24 @@ class LoginView(generics.GenericAPIView):
         user = authenticate(username=username, password=password)
         if user is not None:
             refresh = RefreshToken.for_user(user)
+            user_data = {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'user_type': user.user_type,
+            }
+
+            if user.user_type == 'student':
+                student = Student.objects.get(user=user)
+                user_data['student_id'] = student.id
+            elif user.user_type == 'professor':
+                professor = Professor.objects.get(user=user)
+                user_data['professor_id'] = professor.id
+
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
-                'user': {
-                    'id': user.id,
-                    'username': user.username,
-                    'email': user.email,
-                    'user_type': user.user_type,
-                }
+                'user': user_data
             })
 
         if not User.objects.filter(username=username).exists():

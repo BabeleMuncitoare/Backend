@@ -24,6 +24,7 @@ class UserTests(TestCase):
 
     def test_user_login(self):
         user = User.objects.create_user(username='testuser', password='testpassword', user_type='student')
+        student = Student.objects.create(user=user, group='A', year_of_study=1)
         data = {
             'username': 'testuser',
             'password': 'testpassword'
@@ -34,6 +35,7 @@ class UserTests(TestCase):
         self.assertIn('refresh', response.data)
         self.assertIn('user', response.data)
         self.assertEqual(response.data['user']['id'], user.id)
+        self.assertEqual(response.data['user']['student_id'], student.id)
 
 class ExamTests(TestCase):
     def setUp(self):
