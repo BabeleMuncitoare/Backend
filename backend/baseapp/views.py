@@ -5,7 +5,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
 from .models import Exam, Student, Professor, Class, User, Announcement
-from .serializers import UserSerializer, ExamSerializer, LoginSerializer, ProfessorSerializer, ClassSerializer, AnnouncementSerializer
+from .serializers import UserSerializer, ExamSerializer, LoginSerializer, ProfessorSerializer, ClassSerializer, AnnouncementSerializer, StudentSerializer
 
 User = get_user_model()
 
@@ -211,11 +211,24 @@ class AdminProfessorDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProfessorSerializer
     permission_classes = [IsAdminUser]
 
+# Admin: List, Create, Update, and Delete Students
+class AdminStudentManagementView(generics.ListCreateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    permission_classes = [IsAdminUser]
+
+class AdminStudentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    permission_classes = [IsAdminUser]
+
+# Publicly accessible
 class AnnouncementListView(generics.ListAPIView):
     queryset = Announcement.objects.all()
     serializer_class = AnnouncementSerializer
     permission_classes = []  # Publicly accessible
 
+# Admin: List, Create, Update, and Delete Announcements
 class AdminAnnouncementManagementView(generics.ListCreateAPIView):
     queryset = Announcement.objects.all()
     serializer_class = AnnouncementSerializer

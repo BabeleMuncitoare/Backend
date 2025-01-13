@@ -38,6 +38,13 @@ class ProfessorSerializer(serializers.ModelSerializer):
         model = Professor
         fields = ['id', 'user', 'user_name', 'department']
 
+class StudentSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(source='user.username', read_only=True)
+
+    class Meta:
+        model = Student
+        fields = ['id', 'user', 'user_name', 'group', 'year_of_study']
+
 class ClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Class

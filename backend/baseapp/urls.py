@@ -6,6 +6,7 @@ from .views import (
     RejectExamView, AdminUserManagementView, AdminUserDetailView, AdminClassManagementView, 
     AdminClassDetailView, AdminExamManagementView, AdminExamDetailView, 
     AdminProfessorManagementView, AdminProfessorDetailView,
+    AdminStudentManagementView, AdminStudentDetailView,
     AnnouncementListView, AdminAnnouncementManagementView, AdminAnnouncementDetailView 
 )
 
@@ -33,6 +34,8 @@ urlpatterns = [
     path('admin/exams/<int:pk>/', AdminExamDetailView.as_view(), name='admin-exam-detail'),
     path('admin/professors/', AdminProfessorManagementView.as_view(), name='admin-professor-management'),
     path('admin/professors/<int:pk>/', AdminProfessorDetailView.as_view(), name='admin-professor-detail'),
+    path('admin/students/', AdminStudentManagementView.as_view(), name='admin-student-management'),
+    path('admin/students/<int:pk>/', AdminStudentDetailView.as_view(), name='admin-student-detail'),
     path('announcements/', AnnouncementListView.as_view(), name='announcement-list'),
     path('admin/announcements/', AdminAnnouncementManagementView.as_view(), name='admin-announcement-management'),
     path('admin/announcements/<int:pk>/', AdminAnnouncementDetailView.as_view(), name='admin-announcement-detail'),
