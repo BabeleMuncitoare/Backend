@@ -129,7 +129,7 @@ class PendingExamsListView(generics.ListAPIView):
     def get_queryset(self):
         professor = Professor.objects.get(user=self.request.user)
         return Exam.objects.filter(class_assigned__professors=professor, accepted=False)
-    
+
 class StudentExamsListView(generics.ListAPIView):
     serializer_class = ExamSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -144,7 +144,7 @@ class StudentExamsListView(generics.ListAPIView):
             return Exam.objects.filter(class_assigned__professors=professor)
         else:
             return Exam.objects.none()
-        
+
 class RejectExamView(generics.UpdateAPIView):
     queryset = Exam.objects.all()
     serializer_class = ExamSerializer
@@ -159,8 +159,6 @@ class RejectExamView(generics.UpdateAPIView):
             exam.save()
             return Response({'status': 'Exam rejected'})
         return Response({'error': 'You are not authorized to reject this exam'}, status=status.HTTP_403_FORBIDDEN)
-    
-
 
 # Custom permission to restrict access to admins only
 class IsAdminUser(permissions.BasePermission):

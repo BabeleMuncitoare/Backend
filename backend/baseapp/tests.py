@@ -32,6 +32,8 @@ class UserTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('access', response.data)
         self.assertIn('refresh', response.data)
+        self.assertIn('user', response.data)
+        self.assertEqual(response.data['user']['id'], user.id)
 
 class ExamTests(TestCase):
     def setUp(self):
@@ -53,5 +55,3 @@ class ExamTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Exam.objects.count(), 1)
         self.assertEqual(Exam.objects.get().subject, 'Math')
-
-

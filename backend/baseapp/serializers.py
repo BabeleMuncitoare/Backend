@@ -1,4 +1,3 @@
-# filepath: /c:/Users/Yirade/ip proj/backend/baseapp/serializers.py
 from rest_framework import serializers
 from .models import User, Student, Professor, Exam, Class, Announcement
 
@@ -30,6 +29,7 @@ class ExamSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
+    user_id = serializers.IntegerField(read_only=True)
 
 class ProfessorSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(source='user.username', read_only=True)
